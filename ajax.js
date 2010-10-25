@@ -62,7 +62,13 @@ function ajax( origSettings ) {
 
 	// Matches an absolute URL, and saves the domain
 	var parts = rurl.exec( s.url ),
+	location = window.location,
 	remote = parts && ( parts[1] && parts[1] !== location.protocol || parts[2] !== location.host );
+
+	if ( ! /https?:/i.test( location.protocol ) ) {
+		//The protocol is "app:" in air.
+		remote = false;
+	}
 	remote = s.forceRemote ? true : remote;
 	if ( s.dataType === "jsonp" && !remote ) {
 		s.dataType = "json";
@@ -160,7 +166,6 @@ function ajax( origSettings ) {
 			} else {
 				inFrame = true;
 				// Opera need url path in iframe
-				var location = window.location;
 				if( s.url.slice(0, 1) == "/" ) {
 					s.url = location.protocol + "//" + location.host + (location.port ? (":" + location.port) : "" ) + s.url;
 				}
