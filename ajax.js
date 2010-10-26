@@ -429,6 +429,8 @@ function param( a ) {
 	return a;
 }
 
+ajax.param = param;
+
 var helper = {
 	noop: function() {},
 	// Counter for holding the number of active queries
